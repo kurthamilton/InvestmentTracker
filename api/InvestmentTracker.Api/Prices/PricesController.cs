@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 
-namespace InvestmentTracker.Api.Controllers
+namespace InvestmentTracker.Api.Prices
 {
     [Route("api/[controller]")]
     public class PricesController : Controller
@@ -14,7 +14,7 @@ namespace InvestmentTracker.Api.Controllers
             _pricesRepository = pricesRepository;
         }
 
-        // POST api/values
+        // POST api/prices
         [HttpPost]
         public void Post([FromBody]string html, DateTime date)
         {
