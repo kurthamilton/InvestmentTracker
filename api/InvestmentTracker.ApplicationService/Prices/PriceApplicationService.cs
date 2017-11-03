@@ -14,7 +14,7 @@ namespace InvestmentTracker.ApplicationService.Prices
             _pricesRepository = pricesRepository;
         }
 
-        public void Add(Price price)
+        public Guid Add(Price price)
         {
             List<Price> prices = new List<Price>(_pricesRepository.GetAll());
 
@@ -28,6 +28,29 @@ namespace InvestmentTracker.ApplicationService.Prices
             prices.Add(price);
 
             _pricesRepository.Save(prices);
+
+            return price.Id;
+        }
+
+        public void Delete(Guid id)
+        {
+            List<Price> prices = new List<Price>(_pricesRepository.GetAll());
+
+            Price price = prices.SingleOrDefault(x => x.Id == id);
+
+            if (price == null)
+            {
+                return;
+            }
+
+            prices.Remove(price);
+
+            _pricesRepository.Save(prices);
+        }
+
+        public Price GetById(Guid id)
+        {
+            return GetAll().SingleOrDefault(x => x.Id == id);
         }
 
         public IReadOnlyCollection<Price> GetAll()

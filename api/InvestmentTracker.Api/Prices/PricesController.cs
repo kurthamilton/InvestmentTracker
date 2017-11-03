@@ -1,6 +1,7 @@
 ﻿using InvestmentTracker.ApplicationService.Prices;
 using InvestmentTracker.Domain.Prices;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 
 namespace InvestmentTracker.Api.Prices
@@ -15,6 +16,20 @@ namespace InvestmentTracker.Api.Prices
             _priceApplicationService = priceApplicationService;
         }
 
+        [HttpDelete("{id}")]
+        public IActionResult Delete(Guid id)
+        {
+            _priceApplicationService.Delete(id);
+            return GetAll();
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult Get(Guid id)
+        {
+            Price price = _priceApplicationService.GetById(id);
+            return Json(price);
+        }
+
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -24,11 +39,13 @@ namespace InvestmentTracker.Api.Prices
 
         // POST api/prices
         [HttpPost]
-        public IActionResult Post([FromBody]Price price)
+        public IActionResult Post([FromBody]CreatePriceModel model)
         {
-            _priceApplicationService.Add(price);
+            Price price = new Price(model.Date, model.Fund, model.Value);
 
-            return GetAll();
+            Guid id =_priceApplicationService.Add(price);
+
+            return Get(id);
         }
     }
 }

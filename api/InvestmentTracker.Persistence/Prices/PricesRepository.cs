@@ -14,15 +14,17 @@ namespace InvestmentTracker.Persistence.Prices
         protected override Price FromValues(string[] values)
         {
             return new Price(
-                DateTime.ParseExact(values[0], "yyyy-MM-dd", CultureInfo.InvariantCulture),
-                values[1],
-                double.Parse(values[2], CultureInfo.InvariantCulture));
+                Guid.Parse(values[0]),
+                DateTime.ParseExact(values[1], "yyyy-MM-dd", CultureInfo.InvariantCulture),
+                values[2],
+                double.Parse(values[3], CultureInfo.InvariantCulture));
         }
 
         protected override string[] ToValues(Price entity)
         {
             return new []
             {
+                entity.Id.ToString(),
                 entity.Date.ToString("yyyy-MM-dd"),
                 entity.Fund,
                 entity.Value.ToString(CultureInfo.InvariantCulture)
