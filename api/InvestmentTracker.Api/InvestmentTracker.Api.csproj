@@ -17,7 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\InvestmentTracker.ApplicationService\InvestmentTracker.ApplicationService.csproj" />
     <ProjectReference Include="..\InvestmentTracker.Domain\InvestmentTracker.Domain.csproj" />
+    <ProjectReference Include="..\InvestmentTracker.Persistence\InvestmentTracker.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

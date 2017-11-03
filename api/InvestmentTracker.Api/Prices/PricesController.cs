@@ -1,23 +1,34 @@
-﻿using InvestmentTracker.Domain.Prices;
+﻿using InvestmentTracker.ApplicationService.Prices;
+using InvestmentTracker.Domain.Prices;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using System.Collections.Generic;
 
 namespace InvestmentTracker.Api.Prices
 {
     [Route("api/[controller]")]
     public class PricesController : Controller
     {
-        private readonly IPricesRepository _pricesRepository;
+        private readonly IPriceApplicationService _priceApplicationService;
 
-        public PricesController(IPricesRepository pricesRepository)
+        public PricesController(IPriceApplicationService priceApplicationService)
         {
-            _pricesRepository = pricesRepository;
+            _priceApplicationService = priceApplicationService;
+        }
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            IReadOnlyCollection<Price> prices = _priceApplicationService.GetAll();
+            return Json(prices);
         }
 
         // POST api/prices
         [HttpPost]
-        public void Post([FromBody]string html, DateTime date)
+        public IActionResult Post([FromBody]Price price)
         {
+            _priceApplicationService.Add(price);
+
+            return GetAll();
         }
     }
 }
