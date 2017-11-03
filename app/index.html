@@ -1,16 +1,32 @@
-<!DOCTYPE html>
-<html lang="en" ng-app="myApp" class="no-js">
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="app" class="no-js">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Investment Tracker</title>
   <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="app.css">
 </head>
 <body>
-  
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>  
+
+  <section ng-controller="pricesController as scope">
+    <table>
+      <thead>
+        <th>Date</th>
+        <th ng-repeat="fund in funds">{{fund}}</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="date in model">
+          <td>{{date.date}}</td>
+          <td ng-repeat="fund in date.funds">{{fund.value}}</td>
+        </tr>
+    </tbody>
+    </table>
+  </section>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
