@@ -1,8 +1,18 @@
 (function() {
-  angular
-    .module('app', [])
+  // load config
+  var config = window.__config;
+
+  if (config === undefined) {
+    alert('config.js not set up. Please see readme.');
+    return;
+  }
+
+  var app = angular.module('app', []);
+
+  // setup controller
+  app
     .controller('pricesController', function($scope, $http) {
-      $http.get('http://localhost:51372/api/prices')
+      $http.get(config.apiUrl + '/prices')
       .then(function(response) {
           var prices = response.data;
           $scope.funds = getFunds(prices);
