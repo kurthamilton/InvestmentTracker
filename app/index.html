@@ -13,11 +13,13 @@
   <section ng-controller="pricesController as scope">
     <table>
       <thead>
+        <th></th>
         <th>Date</th>
         <th ng-repeat="fund in funds">{{fund}}</th>
       </thead>
       <tbody>
         <tr ng-repeat="date in model">
+          <td><button ng-click="date.delete()">x</button></td>
           <td>{{date.date}}</td>
           <td ng-repeat="fund in date.funds">{{fund.value}}</td>
         </tr>

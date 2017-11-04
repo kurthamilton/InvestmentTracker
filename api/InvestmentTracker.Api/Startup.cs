@@ -20,17 +20,6 @@ namespace InvestmentTracker.Api
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddCors();
-            services.AddMvc();
-            services.AddRouting();
-
-            AddApplicationServices(services);
-            AddPersistenceServices(services);
-        }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
@@ -41,6 +30,23 @@ namespace InvestmentTracker.Api
 
             app.UseCors(a => a.AllowAnyOrigin());
             app.UseMvcWithDefaultRoute();
+        }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddCors(x => x.AddPolicy("AllowAll", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
+            services.AddMvc();
+            services.AddRouting();
+
+            AddApplicationServices(services);
+            AddPersistenceServices(services);
         }
 
         private static void AddApplicationServices(IServiceCollection services)
