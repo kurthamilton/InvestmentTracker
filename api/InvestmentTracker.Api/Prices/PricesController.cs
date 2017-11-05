@@ -7,7 +7,7 @@ using System.Web.Http;
 
 namespace InvestmentTracker.Api.Prices
 {
-    public class PricesController : ApiController
+    public class PricesController : ControllerBase
     {
         private readonly IPriceApplicationService _priceApplicationService;
 
@@ -27,14 +27,14 @@ namespace InvestmentTracker.Api.Prices
         public IHttpActionResult Get(Guid id)
         {
             Price price = _priceApplicationService.GetById(id);
-            return Json(price);
+            return JsonResult(price);
         }
 
         [HttpGet]
         public IHttpActionResult GetAll()
         {
             IReadOnlyCollection<Price> prices = _priceApplicationService.GetAll();
-            return Json(prices);
+            return JsonResult(prices);
         }
 
         [HttpPost]

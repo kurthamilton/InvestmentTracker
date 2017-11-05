@@ -4,7 +4,7 @@ using System.Web.Http;
 
 namespace InvestmentTracker.Api.Investments
 {
-    public class InvestmentsController : ApiController
+    public class InvestmentsController : ControllerBase
     {
         private readonly IPriceApplicationService _priceApplicationService;
 
@@ -18,7 +18,7 @@ namespace InvestmentTracker.Api.Investments
         {
             IReadOnlyCollection<string> investments = _priceApplicationService.GetInvestmentNames();
 
-            return Json(investments);
+            return JsonResult(investments);
         }
     }
 }
