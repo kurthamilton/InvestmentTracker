@@ -1,13 +1,13 @@
 ﻿using InvestmentTracker.ApplicationService.Prices;
+using InvestmentTracker.Domain.Investments;
 using InvestmentTracker.Domain.Prices;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Web.Http;
 
 namespace InvestmentTracker.Api.Prices
 {
-    [Route("api/[controller]")]
-    public class PricesController : Controller
+    public class PricesController : ApiController
     {
         private readonly IPriceApplicationService _priceApplicationService;
 
@@ -16,36 +16,52 @@ namespace InvestmentTracker.Api.Prices
             _priceApplicationService = priceApplicationService;
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete(Guid id)
+        [HttpDelete]
+        public IHttpActionResult Delete(Guid id)
         {
             _priceApplicationService.Delete(id);
             return GetAll();
         }
 
-        [HttpGet("{id}")]
-        public IActionResult Get(Guid id)
+        [HttpGet]
+        public IHttpActionResult Get(Guid id)
         {
             Price price = _priceApplicationService.GetById(id);
             return Json(price);
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public IHttpActionResult GetAll()
         {
             IReadOnlyCollection<Price> prices = _priceApplicationService.GetAll();
             return Json(prices);
         }
 
-        // POST api/prices
         [HttpPost]
-        public IActionResult Post([FromBody]CreatePriceModel model)
+        public IHttpActionResult Post(CreatePriceModel model)
         {
             Price price = new Price(model.Date, model.Fund, model.Value);
 
-            Guid id =_priceApplicationService.Add(price);
+            Guid id = _priceApplicationService.Add(price);
 
             return Get(id);
+        }
+
+        [HttpPost]
+        public IHttpActionResult Scrape(string investment, string url, string username, string password, DateTime from, DateTime? to = null)
+        {
+            InvestmentSettings settings = new InvestmentSettings
+            {
+                Password = password,
+                Url = url,
+                Username = username
+            };
+
+            IReadOnlyCollection<Price> prices = _priceApplicationService.Scrape(investment, settings, from, to);
+
+            _priceApplicationService.Add(prices);
+
+            return GetAll();
         }
     }
 }

@@ -4,9 +4,9 @@ using System.Globalization;
 
 namespace InvestmentTracker.Persistence.Prices
 {
-    public class PricesRepository : CsvRepository<Price>, IPricesRepository
+    public class PriceRepository : CsvRepository<Price>, IPriceRepository
     {
-        public PricesRepository(string filePath)
+        public PriceRepository(string filePath)
             : base(filePath)
         {
         }
@@ -22,7 +22,7 @@ namespace InvestmentTracker.Persistence.Prices
 
         protected override string[] ToValues(Price entity)
         {
-            return new []
+            return new[]
             {
                 entity.Id.ToString(),
                 entity.Date.ToString("yyyy-MM-dd"),

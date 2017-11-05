@@ -1,4 +1,5 @@
-﻿using InvestmentTracker.Domain.Prices;
+﻿using InvestmentTracker.Domain.Investments;
+using InvestmentTracker.Domain.Prices;
 using System;
 using System.Collections.Generic;
 
@@ -8,10 +9,16 @@ namespace InvestmentTracker.ApplicationService.Prices
     {
         Guid Add(Price price);
 
+        void Add(IEnumerable<Price> prices);
+
         void Delete(Guid id);
+
+        IReadOnlyCollection<Price> GetAll();
 
         Price GetById(Guid id);
 
-        IReadOnlyCollection<Price> GetAll();
+        IReadOnlyCollection<string> GetInvestmentNames();
+
+        IReadOnlyCollection<Price> Scrape(string investmentName, InvestmentSettings settings, DateTime from, DateTime? to);
     }
 }

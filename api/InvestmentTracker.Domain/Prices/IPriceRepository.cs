@@ -1,6 +1,6 @@
 ﻿namespace InvestmentTracker.Domain.Prices
 {
-    public interface IPricesRepository : IRepository<Price>
+    public interface IPriceRepository : IRepository<Price>
     {
     }
 }
