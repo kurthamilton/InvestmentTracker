@@ -130,6 +130,7 @@
     <Compile Include="Investments\InvestmentsController.cs" />
     <Compile Include="Prices\CreatePriceModel.cs" />
     <Compile Include="Prices\PricesController.cs" />
+    <Compile Include="Prices\StringCipher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -19,7 +19,6 @@
         });
 
       function deleteDate(date) {
-
         for (var fund in $scope.model[date].funds) {
           $http
             .delete(config.apiUrl + '/prices/' + $scope.model[date].funds[fund].id)
@@ -27,6 +26,31 @@
               bindResponse($scope, response, deleteDate);
             });
         }
+      }
+
+      $scope.scraper = {
+        from: window.localStorage['scraper.from'],
+        passPhrase: window.localStorage['scraper.passPhrase'],
+        to: window.localStorage['scraper.to'],
+        scrape: function() {
+
+          var scraperUrl = config.apiUrl + '/prices/scrape?' +
+                                           'investment=' + encodeURIComponent(config.scraper.investment) +
+                                           '&url=' + encodeURIComponent(config.scraper.url) +
+                                           '&username=' + encodeURIComponent(config.scraper.username) +
+                                           '&password=' + encodeURIComponent(config.scraper.password) +
+                                           '&passPhrase=' + encodeURIComponent($scope.scraper.passPhrase) +
+                                           '&from=' + $scope.scraper.from +
+                                           '&to=' + $scope.scraper.to;
+          $http
+            .post(scraperUrl)
+            .then(function(response) {
+              bindResponse($scope, response, deleteDate);
+            });
+          window.localStorage['scraper.passPhrase'] = $scope.scraper.passPhrase;
+          window.localStorage['scraper.from'] = $scope.scraper.from;
+          window.localStorage['scraper.to'] = $scope.scraper.to;
+        },
       };
     });
 
@@ -34,6 +58,8 @@
       var prices = response.data;
       $scope.funds = getFunds(prices);
       $scope.model = getModel($scope.funds, prices, deleteDate);
+
+      console.log('complete');
     }
 
     function getFunds(prices) {

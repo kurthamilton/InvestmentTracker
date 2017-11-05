@@ -9,8 +9,16 @@
   <link rel="stylesheet" href="app.css">
 </head>
 <body>
-
   <section ng-controller="pricesController as scope">
+    <div>
+      Password
+      <input type="password" ng-model="scraper.passPhrase" />
+      From
+      <input type="text" ng-model="scraper.from" />
+      To
+      <input type="text" ng-model="scraper.to" />
+      <button ng-click="scraper.scrape()">Scrape</button>
+    </div>
     <table>
       <thead>
         <th></th>

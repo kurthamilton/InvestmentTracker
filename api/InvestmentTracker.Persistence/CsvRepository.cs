@@ -12,12 +12,15 @@ namespace InvestmentTracker.Persistence
         protected CsvRepository(string filePath)
         {
             _filePath = filePath;
-
-            EnsureFileExists();
         }
 
         public IReadOnlyCollection<T> GetAll()
         {
+            if (!File.Exists(_filePath))
+            {
+                return new T[] { };
+            }
+
             IEnumerable<string> lines = File.ReadLines(_filePath);
 
             return lines.Select(x => FromValues(x.Split(','))).ToArray();
@@ -25,6 +28,8 @@ namespace InvestmentTracker.Persistence
 
         public void Save(IEnumerable<T> entities)
         {
+            EnsureFileExists();
+
             IEnumerable<string> lines = entities.Select(x => string.Join(",", ToValues(x)));
 
             File.WriteAllLines(_filePath, lines);

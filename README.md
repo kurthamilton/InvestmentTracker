@@ -11,5 +11,14 @@ Add config.js file to the app folder. It should set a __config property on the w
 (function (window) {
   window.__config = window.__config || {};
   window.__config.apiUrl = '{url of hosted api}/api';
+  
+  window.__config.scraper = {
+    investment: '{investment name}',
+    password: '{encrypted investment password}',
+    url: '{investment url}',
+    username: 'encrypted investment username'
+  };
 }(this));
 ```
+
+Username and password can be encrypted by calling /api/prices/encrypt with the bit of information to encrypt and a pass phrase.
