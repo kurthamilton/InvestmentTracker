@@ -24,8 +24,13 @@ namespace InvestmentTracker.Scraper.Investments
 
         protected string Username { get; }
 
-        public IReadOnlyCollection<Price> GetPrices(DateTime from, DateTime? to)
+        public IReadOnlyCollection<Price> GetPrices(DateTime from, DateTime? to, int intervalDays)
         {
+            if (intervalDays <= 0)
+            {
+                intervalDays = 1;
+            }
+
             using (IWebDriver driver = new PhantomJSDriver())
             {
                 List<Price> prices = new List<Price>();
@@ -45,7 +50,7 @@ namespace InvestmentTracker.Scraper.Investments
                     IEnumerable<Price> datePrices = GetPrices(driver, date);
                     prices.AddRange(datePrices);
 
-                    date = date.AddDays(1);
+                    date = date.AddDays(intervalDays);
                 }
 
                 return prices;

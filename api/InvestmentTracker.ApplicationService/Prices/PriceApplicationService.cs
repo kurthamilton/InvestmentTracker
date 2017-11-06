@@ -72,7 +72,7 @@ namespace InvestmentTracker.ApplicationService.Prices
             return _investmentFactory.GetInvestmentNames().ToArray();
         }
 
-        public IReadOnlyCollection<Price> Scrape(string investmentName, InvestmentSettings settings, DateTime from, DateTime? to)
+        public IReadOnlyCollection<Price> Scrape(string investmentName, InvestmentSettings settings, DateTime from, DateTime? to, int intervalDays)
         {
             IInvestment investment = _investmentFactory.Create(investmentName, settings);
             if (investment == null)
@@ -80,7 +80,7 @@ namespace InvestmentTracker.ApplicationService.Prices
                 return new List<Price>();
             }
 
-            return investment.GetPrices(from, to);
+            return investment.GetPrices(from, to, intervalDays);
         }
 
         private static void Merge(IList<Price> prices, Price price)

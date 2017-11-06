@@ -24,6 +24,7 @@ namespace InvestmentTracker.Api.Prices
         }
 
         [HttpGet]
+        [Route("api/prices/encrypt")]
         public IHttpActionResult Encrypt(string data, string passPhrase)
         {
             return JsonResult(StringCipher.Encrypt(data, passPhrase));
@@ -54,7 +55,8 @@ namespace InvestmentTracker.Api.Prices
         }
 
         [HttpPost]
-        public IHttpActionResult Scrape(string investment, string url, string username, string password, string passPhrase, DateTime from, DateTime? to = null)
+        [Route("api/prices/scrape")]
+        public IHttpActionResult Scrape(string investment, string url, string username, string password, string passPhrase, DateTime from, DateTime? to = null, int intervalDays = 1)
         {
             InvestmentSettings settings = new InvestmentSettings
             {
@@ -63,7 +65,7 @@ namespace InvestmentTracker.Api.Prices
                 Username = StringCipher.Decrypt(username, passPhrase)
             };
 
-            IReadOnlyCollection<Price> prices = _priceApplicationService.Scrape(investment, settings, from, to);
+            IReadOnlyCollection<Price> prices = _priceApplicationService.Scrape(investment, settings, from, to, intervalDays);
 
             _priceApplicationService.Add(prices);
 

@@ -19,6 +19,6 @@ namespace InvestmentTracker.ApplicationService.Prices
 
         IReadOnlyCollection<string> GetInvestmentNames();
 
-        IReadOnlyCollection<Price> Scrape(string investmentName, InvestmentSettings settings, DateTime from, DateTime? to);
+        IReadOnlyCollection<Price> Scrape(string investmentName, InvestmentSettings settings, DateTime from, DateTime? to, int intervalDays);
     }
 }

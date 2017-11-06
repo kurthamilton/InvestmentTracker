@@ -6,6 +6,6 @@ namespace InvestmentTracker.Domain.Investments
 {
     public interface IInvestment
     {
-        IReadOnlyCollection<Price> GetPrices(DateTime from, DateTime? to);
+        IReadOnlyCollection<Price> GetPrices(DateTime from, DateTime? to, int intervalDays);
     }
 }
