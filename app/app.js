@@ -31,7 +31,7 @@
 
       $scope.scraper = {
         from: window.localStorage['scraper.from'],
-        intervalDays: window.localStorage['scraper.intervalDays'] || 1,
+        intervalDays: parseInt(window.localStorage['scraper.intervalDays']) || 1,
         passPhrase: window.localStorage['scraper.passPhrase'],
         to: window.localStorage['scraper.to'],
         scrape: function() {
@@ -52,6 +52,7 @@
             });
           window.localStorage['scraper.passPhrase'] = $scope.scraper.passPhrase;
           window.localStorage['scraper.from'] = $scope.scraper.from;
+          window.localStorage['scraper.intervalDays'] = $scope.scraper.intervalDays;
           window.localStorage['scraper.to'] = $scope.scraper.to;
         },
       };
