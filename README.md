@@ -21,4 +21,4 @@ Add config.js file to the app folder. It should set a __config property on the w
 }(this));
 ```
 
-Username and password can be encrypted by calling /api/prices/encrypt?data={plain text to encrypt}&passPhrase={private password}.
+Username and password can be encrypted by calling /api/prices/encrypt?data={plain text to encrypt}&passPhrase={private password}

@@ -31,6 +31,7 @@
 
       $scope.scraper = {
         from: window.localStorage['scraper.from'],
+        intervalDays: window.localStorage['scraper.intervalDays'] || 1,
         passPhrase: window.localStorage['scraper.passPhrase'],
         to: window.localStorage['scraper.to'],
         scrape: function() {
@@ -42,7 +43,8 @@
                                            '&password=' + encodeURIComponent(config.scraper.password) +
                                            '&passPhrase=' + encodeURIComponent($scope.scraper.passPhrase) +
                                            '&from=' + $scope.scraper.from +
-                                           '&to=' + $scope.scraper.to;
+                                           '&to=' + $scope.scraper.to +
+                                           '&intervalDays=' + $scope.scraper.intervalDays;
           $http
             .post(scraperUrl)
             .then(function(response) {
