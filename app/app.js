@@ -20,8 +20,9 @@
 
       function deleteDate(date) {
         for (var fund in $scope.model[date].funds) {
+          var deleteUrl = config.apiUrl + '/prices/' + $scope.model[date].funds[fund].id;
           $http
-            .delete(config.apiUrl + '/prices/' + $scope.model[date].funds[fund].id)
+            .delete(deleteUrl)
             .then(function(response) {
               bindResponse($scope, response, deleteDate);
             });
