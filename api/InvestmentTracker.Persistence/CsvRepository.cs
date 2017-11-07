@@ -7,6 +7,8 @@ namespace InvestmentTracker.Persistence
 {
     public abstract class CsvRepository<T> : IRepository<T>
     {
+        private static object _fileLock = new object();
+
         private readonly string _filePath;
 
         protected CsvRepository(string filePath)
@@ -21,18 +23,24 @@ namespace InvestmentTracker.Persistence
                 return new T[] { };
             }
 
-            IEnumerable<string> lines = File.ReadLines(_filePath);
+            lock (_fileLock)
+            {
+                IEnumerable<string> lines = File.ReadLines(_filePath);
 
-            return lines.Select(x => FromValues(x.Split(','))).ToArray();
+                return lines.Select(x => FromValues(x.Split(','))).ToArray();
+            }
         }
 
         public void Save(IEnumerable<T> entities)
         {
-            EnsureFileExists();
+            lock (_fileLock)
+            {
+                EnsureFileExists();
 
-            IEnumerable<string> lines = entities.Select(x => string.Join(",", ToValues(x)));
+                IEnumerable<string> lines = entities.Select(x => string.Join(",", ToValues(x)));
 
-            File.WriteAllLines(_filePath, lines);
+                File.WriteAllLines(_filePath, lines);
+            }
         }
 
         protected abstract T FromValues(string[] values);
