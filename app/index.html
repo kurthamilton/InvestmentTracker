@@ -30,7 +30,7 @@
       <tbody>
         <tr ng-repeat="date in model">
           <td><button ng-click="date.delete()">x</button></td>
-          <td>{{date.date}}</td>
+          <td>{{date.date | date:'yyyy-MM-dd'}}</td>
           <td ng-repeat="fund in date.funds">{{fund.value}}</td>
         </tr>
     </tbody>
